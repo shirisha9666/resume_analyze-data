@@ -1,0 +1,74 @@
+import axios from 'axios'; // or you can use the native fetch API
+
+// Example function to send data to the LLM (using OpenAI's API here)
+const sendToLLM = async ({ resumeText, jobDescription }) => {
+  try {
+    const apiKey = process.env.OPENAI_API_KEY; // Ensure you have the API key stored securely
+    const response = await axios.post('https://api.openai.com/v1/completions', {
+      model: 'gpt-3.5-turbo',  // Replace with the model you want to use
+      prompt: `Analyze this resume and job description:\n\nResume: ${resumeText}\n\nJob Description: ${jobDescription}\n\nProvide a match score and suggestions for improvement.`,
+      max_tokens: 1500,  // Adjust depending on the length of your response
+    }, {
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      }
+    });
+
+    return response.data;  // The LLM response will contain match score, analysis, etc.
+  } catch (error) {
+    console.error('Error sending data to LLM:', error);
+    throw error;
+  }
+};
+
+
+
+
+
+
+import pdfParse from 'pdf-parse';
+import fs from 'fs';
+import path from 'path';
+
+export const analyzeResume = async (req, res) => {
+  try {
+    const userId = req.cookies.newUser;
+
+    // 1. Get user data from DB
+    const user = await Resume.findById(userId);
+    const resumePath = path.join(__dirname, '..', user.resumeFilePath);
+
+    // 2. Read and extract text from PDF
+    const resumeBuffer = fs.readFileSync(resumePath);
+    const pdfData = await pdfParse(resumeBuffer);
+    const resumeText = pdfData.text;
+
+    // 3. Send to LLM (pseudo-code)
+    const result = await sendToLLM({
+      resumeText: resumeText,
+      jobDescription: user.jobDescriptionText,
+    });
+
+    // 4. Return result
+    res.json(result);
+  } catch (err) {
+    console.error("Error analyzing resume:", err);
+    res.status(500).json({ error: "Failed to analyze resume" });
+  }
+};
+
+
+
+
+const client = new OpenAI({apiKey:process.env.API_KEY});
+
+export const sendToLLM=async({resumeText,jobDescription})=>{
+     let content=`Analyze this resume and job description:\n\nResume: ${resumeText}\n\nJob Description: ${jobDescription}\n\nProvide a match score and suggestions for improvement.`
+    const response = await client.completions.create({
+        model: "gpt-4.1",
+        input: content,
+    });
+    console.log(response.output_text);
+    return response.output_text
+}
