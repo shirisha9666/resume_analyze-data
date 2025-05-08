@@ -36,7 +36,7 @@ const Home = () => {
                     <textarea
                         type="text"
                         name="formData"
-                        placeholder="type job description"
+                        placeholder="Type Job Description"
                         value={jobDescriptionText}
                         onChange={(e) => setJobDescriptionText(e.target.value)}
                     />
