@@ -13,8 +13,9 @@ app.use(cors({
     credentials:true
 }))
 app.use(express.json())
-const __dirname=path.reslove()
-app.use('/uploads', express.static('uploads'));
+const __dirname=path.resolve()
+// app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use("/api/resume",resumeRoute)
 
 // app.use(express.static(path.join(__dirname,"/froentend/build")))
@@ -24,7 +25,7 @@ app.use("/api/resume",resumeRoute)
 // })
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 
-app.get('*', (req, res) => {
+app.all('/{*any}', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
 

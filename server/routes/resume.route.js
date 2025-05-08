@@ -1,5 +1,5 @@
 import express from "express"
-import { getresumeFile, uploadResume } from "../controller/resume.controller.js"
+import {  uploadResume } from "../controller/resume.controller.js"
 import multer from "multer"
 
 
@@ -22,7 +22,6 @@ const upload = multer({ storage })
 router.post("/upload", upload.fields([{ name: "resume", maxCount: 1 }]), uploadResume)
 
 
-router.get("/", getresumeFile)
 
 
 export default router

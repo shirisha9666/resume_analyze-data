@@ -52,23 +52,4 @@ export const uploadResume = async (req, res) => {
     }
 }
 
-export const getresumeFile = async (req, res) => {
-    try {
-        const resumeId = req.cookies.newUser
-        console.log("resumeId", resumeId)
-        if (!resumeId) {
-            return res.status(400).json({ message: "Resume ID not found in cookies" });
-        }
-        const resumeData = await Resume.findById(resumeId)
-        if (!resumeData) {
-            return res.status(404).json({ message: "Resume not found" });
-        }
-        res.status(200).json({ message: true, resumeData })
-
-    } catch (error) {
-
-        console.log(`Error in the uploadResume : ${error}`)
-        res.status(500).json({ message: "Internal server Error" })
-    }
-}
 
