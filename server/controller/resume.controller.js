@@ -7,11 +7,11 @@ import { fileURLToPath } from 'url';
 
 const analyzeResume = async (resumeText, jobDescription) => {
     try {
-        console.log("resumeText, jobDescription",resumeText, jobDescription)
+        console.log("resumeText, jobDescription", resumeText, jobDescription)
 
         const __filename = fileURLToPath(import.meta.url);
         const __dirname = path.dirname(__filename);
-       
+
         const resumePath = path.join(__dirname, "..", resumeText)
         const resumeBuffer = fs.readFileSync(resumePath)
         const pdfData = await pdf(resumeBuffer)
@@ -19,38 +19,38 @@ const analyzeResume = async (resumeText, jobDescription) => {
         // send to the LLM
         const result = await sendToLLM({
             resumeText: resumeTextRead,
-            jobDescription:jobDescription
+            jobDescription: jobDescription
         })
-      
+
         return result
- } catch (error) {
+    } catch (error) {
         console.log(`Error in the analyzeResume : ${error}`)
-     
+
     }
 }
 
 export const uploadResume = async (req, res) => {
     try {
         const { jobDescriptionText } = req.body;
-   
+
         const resumePath = req.files?.resume?.[0]?.path;
-        const resumPathreplace=resumePath.replace(/\\/g, '/');
-  
-     
-        console.log('req.files:',resumePath);
-  const newUser = await Resume.create({
+        const resumPathreplace = resumePath.replace(/\\/g, '/');
+
+
+        console.log('req.files:', resumePath);
+        const newUser = await Resume.create({
             jobDescriptionText: jobDescriptionText,
             resumeFilePath: resumPathreplace
         })
         res.cookie("newUser", newUser._id, {
             maxAge: 7 * 24 * 60 * 60 * 1000,
             httpOnly: true,
-            sameSite: "strict", 
+            sameSite: "strict",
             secure: process.env.NODE_ENV === "production",
         });
-        let resultData=await analyzeResume(newUser.resumeFilePath,newUser.jobDescriptionText)
-        
-        res.status(200).json({ success: true, resultData})
+        let resultData = await analyzeResume(newUser.resumeFilePath, newUser.jobDescriptionText)
+
+        res.status(200).json({ success: true, resultData })
     } catch (error) {
         console.log(`Error in the uploadResume : ${error}`)
         res.status(500).json({ message: "Internal server Error" })

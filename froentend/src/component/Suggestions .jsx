@@ -25,7 +25,7 @@ const Suggestions = () => {
   return (
     <div className="section-suggestions">
       <div className="white suggestion-container">
-        <h1 className="heading">Resume Analyze Result</h1>
+        <h1 className="heading">Resume Analysis Result</h1>
 
         {loading ? (
           <span className="white loading-style">Loading...</span>
