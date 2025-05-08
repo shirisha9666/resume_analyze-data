@@ -42,12 +42,7 @@ export const uploadResume = async (req, res) => {
             jobDescriptionText: jobDescriptionText,
             resumeFilePath: resumPathreplace
         })
-        res.cookie("newUser", newUser._id, {
-            maxAge: 7 * 24 * 60 * 60 * 1000,
-            httpOnly: true,
-            sameSite: "strict",
-            secure: process.env.NODE_ENV === "production",
-        });
+        
         let resultData = await analyzeResume(newUser.resumeFilePath, newUser.jobDescriptionText)
 
         res.status(200).json({ success: true, resultData })
