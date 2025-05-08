@@ -6,7 +6,7 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
 const [loading,setLoading]=useState(false)
 
-  const BASE_URL = process.env.REACT_APP_API_URL;
+  const BASE_URL = "http://localhost:5003/api/resume/upload";
 
   const uploadresume = async (file, jobDescriptionText) => {
     try {
