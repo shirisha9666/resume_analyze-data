@@ -6,7 +6,7 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
 
  
-  let [respone, setResponse] = useState([]);
+
   const [loading,setLoading]=useState(false)
 
   const BASE_URL = "http://localhost:5003/api/resume/upload";
@@ -24,7 +24,8 @@ export const AppProvider = ({ children }) => {
         },
       });
   
-      setResponse(res.data.resultData);
+      localStorage.setItem("matchResult",JSON.stringify(res.data.resultData))
+  
     } catch (error) {
       console.log(error.response.data.message || "Something went wrong");
     } finally {
@@ -33,7 +34,7 @@ export const AppProvider = ({ children }) => {
   };
 
   return (
-    <AppContext.Provider value={{ uploadresume, respone,loading }}>
+    <AppContext.Provider value={{ uploadresume,loading }}>
       {children}
     </AppContext.Provider>
   );

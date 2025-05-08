@@ -21,11 +21,9 @@ const analyzeResume = async (resumeText, jobDescription) => {
             resumeText: resumeTextRead,
             jobDescription:jobDescription
         })
-        // console.log("result",result)
+      
         return result
-     
-     
-    } catch (error) {
+ } catch (error) {
         console.log(`Error in the analyzeResume : ${error}`)
      
     }
@@ -46,8 +44,8 @@ export const uploadResume = async (req, res) => {
         })
         res.cookie("newUser", newUser._id, {
             maxAge: 7 * 24 * 60 * 60 * 1000,
-            httpOnly: true, //prevent XSS attacks,
-            sameSite: "strict", //prevent CSRF attacks
+            httpOnly: true,
+            sameSite: "strict", 
             secure: process.env.NODE_ENV === "production",
         });
         let resultData=await analyzeResume(newUser.resumeFilePath,newUser.jobDescriptionText)
