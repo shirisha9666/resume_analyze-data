@@ -1,13 +1,16 @@
 import React, { useRef, useState } from "react";
 import { useAppContext } from "../context/Store";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [jobDescriptionText, setJobDescriptionText] = useState("");
   const [resume, setResume] = useState(null);
   const fileInputRef = useRef(null);
+  let navigate=useNavigate()
 
   const { uploadresume, respone, loading } = useAppContext();
   console.log("respone", respone);
+
   const handlePdfChange = (e) => {
     const file = e.target.files[0];
 
@@ -19,6 +22,8 @@ const Home = () => {
   const handleresume = (e) => {
     e.preventDefault();
     uploadresume(resume, jobDescriptionText);
+    navigate("/resume/suggestions")
+    
     console.log("result", resume, jobDescriptionText);
   };
 

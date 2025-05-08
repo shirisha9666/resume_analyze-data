@@ -1,14 +1,20 @@
 
 import './App.css';
 import Home from './component/Home';
-import {  useAppContext } from './context/Store';
+import { Route,Routes } from 'react-router-dom';
+import Suggestions from './component/Suggestions ';
+
 
 function App() {
-  // const {hello}=useAppContext()
+
   
   return (
     <div>
-     <Home/>
+  
+     <Routes>
+     <Route path="/" element={  <Home/>}/>
+      <Route path='/resume/suggestions' element={<Suggestions/>}/>
+     </Routes>
     </div>
   );
 }
