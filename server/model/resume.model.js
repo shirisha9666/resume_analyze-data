@@ -11,6 +11,7 @@ const resumeModel=new mongoose.Schema({
     },
     resumeFilePath:{
         type:String,
+        required:true
       
     },
     matchScore:{
