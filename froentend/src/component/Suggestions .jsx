@@ -1,41 +1,60 @@
 import React from 'react'
-import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
+import { useAppContext } from '../context/Store';
 
-const Suggestions  = () => {
-  return (
-    <div className='section-suggestions'>
-       <div className='white suggestion-container'>
-        <h1 className='heading'>Resume Analyze Result</h1>
-        <div className='flex child-1'>
-            <span className='score'>Score </span>
-            <span className='colen'>:</span>
-            <span className='dec'> Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus laboriosam voluptate eos nulla ipsum quia quo. Obcaecati culpa natus inventore odio neque illum hic. Soluta rerum maiores voluptates ad perferendis! </span>
-        </div>
-        <div className='flex child-1'>
-            <span className='score'>Suggestions </span>
-            <span className='colen'>:</span>
-            <span className='dec'> Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus laboriosam voluptate eos nulla ipsum quia quo. Obcaecati culpa natus inventore odio neque illum hic. Soluta rerum maiores voluptates ad perferendis! </span>
-        </div>
-        <div className='flex child-1'>
-            <span className='score'>Improvement </span>
-            <span className='colen'>:</span>
-            <span className='dec'> Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus laboriosam voluptate eos nulla ipsum quia quo. Obcaecati culpa natus inventore odio neque illum hic. Soluta rerum maiores voluptates ad perferendis! </span>
-        </div>
-        <div className='flex child-1'>
-            <span className='score'>Description </span>
-            <span className='colen'>:</span>
-            <span className='dec'> Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus laboriosam voluptate eos nulla ipsum quia quo. Obcaecati culpa natus inventore odio neque illum hic. Soluta rerum maiores voluptates ad perferendis! </span>
-        </div>
-        <div className='flex child-1'>
-            <span className='score'>summary  </span>
-            <span className='colen'>:</span>
-            <span className='dec'> Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus laboriosam voluptate eos nulla ipsum quia quo. Obcaecati culpa natus inventore odio neque illum hic. Soluta rerum maiores voluptates ad perferendis! </span>
-        </div>
 
+const Suggestions = () => {
+    let cleanedRespone = null
+
+    const { respone,loading } = useAppContext();
+ 
+    console.log("loading",loading)
+
+
+    try {
      
-       </div>
-         </div>
-  )
+        const raw = typeof respone === 'string' ? respone.replace(/```json|```/g, '').trim() : respone;
+
+       cleanedRespone = JSON.parse(raw);
+
+        console.log("Parsed Response Keys:", Object.keys(cleanedRespone));
+    } catch (err) {
+        console.error("JSON parsing error:", err.message);
+    }
+
+
+    return (
+        <div className='section-suggestions'>
+            <div className='white suggestion-container'>
+                <h1 className='heading'>Resume Analyze Result</h1>
+                
+{loading?(<span className='white loading-style'>Loading...</span>):(<>
+    {cleanedRespone && Object.entries(cleanedRespone).map(([key, value], index) => (
+                    <div className='flex child-1' key={index}>
+                        <span className='score'>{key.charAt(0).toUpperCase() + key.slice(1)}</span>
+                        <span className='colen'>:</span>
+                        <span className='dec'>
+                            {typeof value === 'string' ? (
+                                value
+                            ) : (
+                                value.map((item, i) => (
+                                    <span key={i} >
+                                        • {item}<br />
+                                    </span>
+                                ))
+                            )}
+                        </span>
+                    </div>
+                ))}
+</>)}
+
+              
+
+              
+
+
+            </div>
+        </div>
+    )
 }
 
 export default Suggestions 

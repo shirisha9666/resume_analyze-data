@@ -50,9 +50,9 @@ export const uploadResume = async (req, res) => {
             sameSite: "strict", //prevent CSRF attacks
             secure: process.env.NODE_ENV === "production",
         });
-        let reusltData=await analyzeResume(newUser.resumeFilePath,newUser.jobDescriptionText)
+        let resultData=await analyzeResume(newUser.resumeFilePath,newUser.jobDescriptionText)
         
-        res.status(200).json({ success: true, newUser,reusltData })
+        res.status(200).json({ success: true, resultData})
     } catch (error) {
         console.log(`Error in the uploadResume : ${error}`)
         res.status(500).json({ message: "Internal server Error" })

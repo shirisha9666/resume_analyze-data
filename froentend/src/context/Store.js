@@ -4,15 +4,16 @@ import axios from "axios";
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-    
-  let loading = false;
+
+ 
   let [respone, setResponse] = useState([]);
+  const [loading,setLoading]=useState(false)
 
   const BASE_URL = "http://localhost:5003/api/resume/upload";
 
   const uploadresume = async (file, jobDescriptionText) => {
     try {
-      loading = true;
+        setLoading(true);
       const formData = new FormData();
       formData.append("resume", file);
       formData.append("jobDescriptionText", jobDescriptionText);
@@ -22,17 +23,17 @@ export const AppProvider = ({ children }) => {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log("res.data.newUser", res.data.newUser);
-      setResponse(res.data.reusltData);
+  
+      setResponse(res.data.resultData);
     } catch (error) {
       console.log(error.response.data.message || "Something went wrong");
     } finally {
-      loading = false;
+        setLoading(false);
     }
   };
 
   return (
-    <AppContext.Provider value={{ uploadresume, respone }}>
+    <AppContext.Provider value={{ uploadresume, respone,loading }}>
       {children}
     </AppContext.Provider>
   );
