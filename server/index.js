@@ -18,27 +18,20 @@ app.use(express.json())
 // app.use('/uploads', express.static('uploads'));
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use("/api/resume",resumeRoute)
 
 
-// app.use(express.static(path.join(__dirname, '../frontend/build')));
 
-// app.all('/{*any}', (req, res) => {
- 
-//   res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
-// });
-
-// app.use(express.static(path.join(__dirname, '../public')));
-// const pathToFrontend = path.join(__dirname, '../frontend/build');
-const pathToFrontend = path.join(__dirname, '..', 'frontend', 'build');
-app.use(express.static(pathToFrontend));
-// app.use(express.static(pathToFrontend));
-app.use(express.static(path.join(process.cwd(), 'frontend', 'build')));
+const frontendPath = path.join(__dirname, '../frontend/build');
+app.use(express.static(frontendPath));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(pathToFrontend, 'index.html'));
+     res.sendFile(path.join(frontendPath, 'index.html'));
 });
+
+
+// above section
+app.use("/api/resume",resumeRoute)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 let PORT=process.env.PORT
 
