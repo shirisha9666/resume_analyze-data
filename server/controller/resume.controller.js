@@ -3,19 +3,19 @@ import pdf from "pdf-parse/lib/pdf-parse.js";
 import fs from "fs"
 import path from "path"
 import { sendToLLM } from "../lib/llm.js";
-import { fileURLToPath } from 'url';
+
 
 const analyzeResume = async (resumeText, jobDescription) => {
     try {
         console.log("resumeText, jobDescription", resumeText, jobDescription)
 
-        const __filename = fileURLToPath(import.meta.url);
-        const __dirname = path.dirname(__filename);
 
-        const resumePath = path.join(__dirname, "..", resumeText)
+
+        const resumePath = path.resolve('D:/MERN Stack/resume_analyze/uploads', resumeText);
         const resumeBuffer = fs.readFileSync(resumePath)
         const pdfData = await pdf(resumeBuffer)
         const resumeTextRead = pdfData.text
+        console.log("resumeTextRead", resumeTextRead)
         // send to the LLM
         const result = await sendToLLM({
             resumeText: resumeTextRead,
@@ -42,7 +42,7 @@ export const uploadResume = async (req, res) => {
             jobDescriptionText: jobDescriptionText,
             resumeFilePath: resumPathreplace
         })
-        
+
         let resultData = await analyzeResume(newUser.resumeFilePath, newUser.jobDescriptionText)
 
         res.status(200).json({ success: true, resultData })
