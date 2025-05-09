@@ -9,6 +9,7 @@ const [loading,setLoading]=useState(false)
 
   
    const BASE_URL = `${process.env.REACT_APP_API_URL}/api/resume/upload`;
+    //  const BASE_URL = `http://localhost:5003/api/resume/upload`;
 
   const uploadresume = async (file, jobDescriptionText) => {
     try {
