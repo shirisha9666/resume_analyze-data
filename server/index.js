@@ -1,10 +1,11 @@
-import express from "express"
 import path from "path"
+import express from "express"
 import dotenv from "dotenv"
 import cors from "cors"
 import { connectDB } from "./lib/db.js"
 import resumeRoute from "./routes/resume.route.js"
 import { fileURLToPath } from 'url';
+
 
 dotenv.config()
 
@@ -14,19 +15,14 @@ app.use(cors({
     credentials:true
 }))
 app.use(express.json())
-// const __dirname=path.resolve()
-// app.use('/uploads', express.static('uploads'));
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname=path.resolve()
 
+app.use(express.static(path.join(__dirname,"/frontend/build")))
 
+app.get("*",(req,res)=>{
+  res.sendFile(path.join(__dirname,"frontend","build","index.html"))
+})
 
-const frontendPath = path.join(__dirname, '../frontend/build');
-app.use(express.static(frontendPath));
-
-app.get('*', (req, res) => {
-     res.sendFile(path.join(frontendPath, 'index.html'));
-});
 
 
 // above section
