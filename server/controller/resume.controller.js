@@ -36,6 +36,7 @@ export const uploadResume = async (req, res) => {
          access_mode: "public",
     });
     const cloudinaryUrl = cloudinaryResult.secure_url;
+  
 
     console.log("req.files:", cloudinaryUrl);
     const newUser = await Resume.create({
