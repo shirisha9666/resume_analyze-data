@@ -21,7 +21,7 @@ const __dirname = path.dirname(__filename);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use("/api/resume",resumeRoute)
 
-
+console.log('Current working directory:', process.cwd());
 // app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // app.all('/{*any}', (req, res) => {
