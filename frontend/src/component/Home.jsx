@@ -1,12 +1,12 @@
 import React, { useRef, useState } from "react";
 import { useAppContext } from "../context/Store";
-import { useNavigate } from "react-router-dom";
+import  { toast } from 'react-hot-toast';
 
 const Home = () => {
     const [jobDescriptionText, setJobDescriptionText] = useState("");
     const [resume, setResume] = useState(null);
     const fileInputRef = useRef(null);
-    let navigate = useNavigate()
+
 
     const { uploadresume, loading } = useAppContext();
 
@@ -14,19 +14,21 @@ const Home = () => {
     const handlePdfChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setResume(file);
+        setResume(file);
+        }else{
+           return toast.error("No file selected")
         }
     };
 
     const handleresume = (e) => {
         e.preventDefault();
         uploadresume(resume, jobDescriptionText);
-        navigate("/resume/suggestions")
+
 
         console.log("result", resume, jobDescriptionText);
     };
 
-    //
+    
     return (
         <div className="main-div">
             <div className="section-one">

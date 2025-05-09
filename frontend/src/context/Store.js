@@ -1,11 +1,13 @@
 import { createContext, useContext, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
 const [loading,setLoading]=useState(false)
 
+ let navigate = useNavigate()
 
   
    const BASE_URL = `${process.env.REACT_APP_API_URL}/api/resume/upload`;
@@ -24,11 +26,13 @@ const [loading,setLoading]=useState(false)
         },
       });
        const { resultData, resumeUrl } = res.data;
+           navigate("/resume/suggestions")
        console.log("resumeUrl",resumeUrl)
   
        if (resultData && resumeUrl) {
       localStorage.setItem("matchResult", JSON.stringify(resultData));
       localStorage.setItem("resumeUrl", resumeUrl);
+
     } else {
       console.warn("Missing resultData or resumeUrl in response");
     }
