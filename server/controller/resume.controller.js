@@ -1,10 +1,10 @@
 import Resume from "../model/resume.model.js";
 import pdf from "pdf-parse/lib/pdf-parse.js";
 import fs from "fs";
-import path from "path";
+
 import { sendToLLM } from "../lib/llm.js";
 import cloudinary from "../lib/cloudinary.js";
-import axios from "axios";
+
 
 const analyzeResume = async (resumeText, jobDescription) => {
   try {
