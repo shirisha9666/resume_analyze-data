@@ -31,15 +31,13 @@ app.use("/api/resume",resumeRoute)
 
 // app.use(express.static(path.join(__dirname, '../public')));
 // const pathToFrontend = path.join(__dirname, '../frontend/build');
-const pathToFrontend = path.join(process.cwd(), 'frontend', 'build', 'index.html');
-console.log("Frontend path during deployment:", pathToFrontend);
+const pathToFrontend = path.join(__dirname, '..', 'frontend', 'build');
+app.use(express.static(pathToFrontend));
 // app.use(express.static(pathToFrontend));
 app.use(express.static(path.join(process.cwd(), 'frontend', 'build')));
 
 app.all('*', (req, res) => {
-    res.sendFile(pathToFrontend)
- 
-  //  res.sendFile(path.join(pathToFrontend, 'index.html'))
+  res.sendFile(path.join(pathToFrontend, 'index.html'));
 });
 
 let PORT=process.env.PORT
