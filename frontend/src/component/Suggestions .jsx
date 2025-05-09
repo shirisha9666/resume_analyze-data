@@ -6,6 +6,7 @@ const Suggestions = () => {
 
   const { loading } = useAppContext();
   const respone=JSON.parse(localStorage.getItem("matchResult"));
+  console.log("respone",respone)
 
   console.log("loading", loading);
 
