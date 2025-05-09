@@ -6,8 +6,9 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
 const [loading,setLoading]=useState(false)
 
-  // const BASE_URL =`${process.env.REACT_APP_API_URL}/api/resume/upload`;
-  const BASE_URL = "https://resume-analyze-data-4.onrender.com/api/resume/upload";
+
+  // const BASE_URL = "https://resume-analyze-data-4.onrender.com/api/resume/upload";
+   const BASE_URL = `${process.env.REACT_APP_API_URL}/api/resume/upload`;
 
   const uploadresume = async (file, jobDescriptionText) => {
     try {

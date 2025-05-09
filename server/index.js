@@ -4,19 +4,19 @@ import dotenv from "dotenv"
 import cors from "cors"
 import { connectDB } from "./lib/db.js"
 import resumeRoute from "./routes/resume.route.js"
-import { fileURLToPath } from 'url';
+
 
 
 dotenv.config()
 
 const app=express();
 const allowedOrigins = [
-  "http://localhost:3000",
-  "https://resume-analyze-data-4.onrender.com"
+  process.env.CLIENT_URL,
+ process.env.DEPLOY_URL
 ];
 
 app.use(cors({
-    // origin:"http://localhost:3000",
+   
    origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
