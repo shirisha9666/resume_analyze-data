@@ -36,7 +36,7 @@ app.use(express.static(pathToFrontend));
 // app.use(express.static(pathToFrontend));
 app.use(express.static(path.join(process.cwd(), 'frontend', 'build')));
 
-app.all('*', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(pathToFrontend, 'index.html'));
 });
 
