@@ -9,7 +9,7 @@ const [loading,setLoading]=useState(false)
 
   
    const BASE_URL = `${process.env.REACT_APP_API_URL}/api/resume/upload`;
-   
+  //  const BASE_URL="http://localhost:5003/api/resume/upload"
 
   const uploadresume = async (file, jobDescriptionText) => {
     try {
@@ -23,8 +23,15 @@ const [loading,setLoading]=useState(false)
           "Content-Type": "multipart/form-data",
         },
       });
+       const { resultData, resumeUrl } = res.data;
+       console.log("resumeUrl",resumeUrl)
   
-      localStorage.setItem("matchResult",JSON.stringify(res.data.resultData))
+       if (resultData && resumeUrl) {
+      localStorage.setItem("matchResult", JSON.stringify(resultData));
+      localStorage.setItem("resumeUrl", resumeUrl);
+    } else {
+      console.warn("Missing resultData or resumeUrl in response");
+    }
   
     } catch (error) {
       console.log(error.response.data.message || "Something went wrong");

@@ -49,7 +49,7 @@ export const uploadResume = async (req, res) => {
       newUser.jobDescriptionText
     );
 
-    res.status(200).json({ success: true, resultData });
+    res.status(200).json({ success: true, resultData,resumeUrl: cloudinaryUrl });
   } catch (error) {
     console.log(`Error in the uploadResume : ${error}`);
     res.status(500).json({ message: "Internal server Error" });
