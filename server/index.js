@@ -28,7 +28,7 @@ app.use("/api/resume",resumeRoute)
 
 app.use(express.static(path.join(__dirname, '../public')));
 
-app.all('/{*any}', (req, res) => {
+app.all('*', (req, res) => {
  
   res.sendFile(path.join(__dirname, "../public/index.html"));
 });
