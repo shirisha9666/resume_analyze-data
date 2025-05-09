@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 app.all('*', (req, res) => {
  
-  res.sendFile(path.join(__dirname, "../public/index.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 let PORT=process.env.PORT
