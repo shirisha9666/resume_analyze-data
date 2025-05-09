@@ -5,8 +5,8 @@ const Suggestions = () => {
   let cleanedRespone = null;
 
   const { loading } = useAppContext();
-  const respone=JSON.parse(localStorage.getItem("matchResult"));
-  console.log("respone",respone)
+  const respone = JSON.parse(localStorage.getItem("matchResult"));
+  console.log("respone", respone)
 
   console.log("loading", loading);
 
@@ -43,11 +43,11 @@ const Suggestions = () => {
                     {typeof value === "string"
                       ? value
                       : value.map((item, i) => (
-                          <span key={i}>
-                            • {item}
-                            <br />
-                          </span>
-                        ))}
+                        <span key={i}>
+                          • {item}
+                          <br />
+                        </span>
+                      ))}
                   </span>
                 </div>
               ))}
